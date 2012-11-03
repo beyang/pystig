@@ -422,7 +422,7 @@ def bsearch(x, xs):
             return mid
     return lo
 
-class Tree(collections.defaultdict):
+class Tree:
     @staticmethod
     def from_list(ls):
         return Tree(ls[0], [Tree.from_list(x) for x in ls[1:]])
@@ -565,12 +565,12 @@ if __name__ == '__main__':
 
     print_('Testing print_ function.')
     assert list(xrange(3)) == [0, 1, 2]
-    assert list(batches([1,2,3,4,5,6,7,8], 3)) == [[1,2,3], [4,5,6], [7,8]]
+    assert list(chunked([1,2,3,4,5,6,7,8], 3)) == [[1,2,3], [4,5,6], [7,8]]
 
     ticks = iter(xrange(0, 42, 5))
     def f(i):
         assert i == next(ticks)
-    logticks(xrange(42), 5, f)
+    ticked(xrange(42), 5, f)
     del f, ticks
 
     assert concat([[1,2,3], [4], [5,6]]) == [1,2,3,4,5,6]
