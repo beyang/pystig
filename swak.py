@@ -133,7 +133,34 @@ def fst(x):
     return x[0]
 
 def snd(x):
-    return x[1]    
+    return x[1]
+
+def enumeration(xs):
+    '''
+    Give each unique element of xs an integer in 0..len(xs) in order of
+    first appearance.
+    '''
+    there = {}
+    back = []
+    for i, x in enumerate(xs):
+        if x not in there:
+            there[x] = len(there)
+            back.append(x)
+    return there, back
+
+def arguniq(xs):
+    seen = set()
+    args = []
+    uniqs = []
+    for i, x in enumerate(xs):
+        if x not in seen:
+            seen.add(x)
+            args.append(i)
+            uniqs.append(x)
+    return uniqs, args
+
+def argsorted(xs):
+    return sorted(xrange(len(xs)), key=xs.__getitem__)
 
 ########################################################################
 # Strings
