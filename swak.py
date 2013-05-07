@@ -99,6 +99,41 @@ def make_grid(*args, **kwargs):
         cur = [cur] * n
     return cur
 
+def getattr_trail(trail, d):
+    '''
+    Iterated getattr rooted at `d` for every name in `trail`.
+    '''
+    for t in trail:
+        d = d[t]
+    return d
+
+def build_jsonlike_query(query):
+    '''
+    Returns a function that takes a dict as obtained by `json.loads()`
+    and executes the jsonlike query on it.
+
+    Example:
+    The query (string)
+
+       'foo.bar.#2.baz'
+
+    return `47` when applied to
+
+       {
+         'foo': {
+           'bar': [{}, { 'zap': 62 }, { 'baz': 47 }, { 'bzzp': 5 }],
+           'baf': [5]
+         }
+       }
+
+    '''
+    trail = query.split('.')
+    trail = [
+        int(x[1:]) if (len(t) >= 2 and t[0] == '#') else unicode(x)
+        for x in trail
+    ]
+    return curry(getattr_trail, trail)
+
 ########################################################################
 # Sequences / iteration
 
@@ -220,6 +255,15 @@ class StrDB(collections.Mapping):
 
 ########################################################################
 # Functions
+
+def curry(f, *args, **kwargs):
+    def g(*args_, *kwargs_):
+        args.extend(args_)
+        kwargs.update(kwargs_)
+        return f(*args, **kwargs)
+    g.__name__ = f.__name__
+    g.__doc__ = f.__doc__
+    return g
 
 def compose(f, g):
     def fg(*args, **kwargs):
