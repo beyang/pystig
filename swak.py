@@ -257,7 +257,7 @@ class StrDB(collections.Mapping):
 # Functions
 
 def curry(f, *args, **kwargs):
-    def g(*args_, *kwargs_):
+    def g(*args_, **kwargs_):
         args.extend(args_)
         kwargs.update(kwargs_)
         return f(*args, **kwargs)
