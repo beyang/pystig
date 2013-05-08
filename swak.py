@@ -39,6 +39,12 @@ try:
 except NameError:
     xrange = range
 
+# This might be a terrible idea.
+try:
+    unicode
+except NameError:
+    unicode = str
+
 ########################################################################
 # Unix/OS
 
@@ -135,7 +141,7 @@ def build_jsonlike_query(query):
     '''
     trail = query.split('.')
     trail = [
-        int(x[1:]) if (len(t) >= 2 and t[0] == '#') else unicode(x)
+        int(x[1:]) if (len(x) >= 2 and x[0] == '#') else unicode(x)
         for x in trail
     ]
     return curry(getattr_trail, trail)
