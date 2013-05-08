@@ -46,14 +46,14 @@ def sh(arg, shell=True):
     '''Issue a shell command as subprocess.'''
     return subprocess.check_call(arg, shell=shell)
 
-def sh_tick(arg, shell=True):
+def sh_slurp(arg, shell=True):
     '''Issue a shell command as subprocess and return its output'''
     return subprocess.check_output(arg, shell=shell, universal_newlines=True)
 
 def system(arg):
     return sh(arg, shell=False)
 
-def system_tick(arg):
+def system_slurp(arg):
     return shtick(arg, shell=False)
 
 ########################################################################
