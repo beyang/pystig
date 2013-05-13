@@ -65,7 +65,7 @@ def system_slurp(arg):
 ########################################################################
 # Iteration
 
-def chunked(it, n):
+def chunked(n, it):
     assert n > 0
     buf = []
     for i, x in enumerate(it):
@@ -75,6 +75,21 @@ def chunked(it, n):
             buf = []
     if buf:
         yield buf
+
+def take(n, it):
+    buf = []
+    for i, x in enumerate(it):
+        if i == n:
+            break
+        buf.append(x)
+    return buf
+
+def sliding(n, it):
+    buf = take(n, it)
+    yield tuple(buf)
+    for x in it:
+        buf = buf[1:] + [x]
+        yield tuple(buf)
 
 def ticked(it, step, logger=print_):
     assert step > 0
@@ -648,7 +663,7 @@ if __name__ == '__main__':
 
     print_('Testing print_ function.')
     assert list(xrange(3)) == [0, 1, 2]
-    assert list(chunked([1,2,3,4,5,6,7,8], 3)) == [[1,2,3], [4,5,6], [7,8]]
+    assert list(chunked(3, [1,2,3,4,5,6,7,8])) == [[1,2,3], [4,5,6], [7,8]]
 
     ticks = iter(xrange(0, 42, 5))
     def f(i):
