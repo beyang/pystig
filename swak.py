@@ -91,6 +91,18 @@ def sliding(n, it):
         buf = buf[1:] + [x]
         yield tuple(buf)
 
+def growing(n, it):
+    buf = []
+    for i, x in enumerate(it):
+        if i == n:
+            yield buf
+        buf.append(x)
+
+def skip(n, it):
+    for i, x in enumerate(it):
+        if i >= n:
+            yield x
+
 def ticked(it, step, logger=print_):
     assert step > 0
     for i, x in enumerate(it):
