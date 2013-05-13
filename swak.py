@@ -97,6 +97,7 @@ def growing(n, it):
         if i % n == 0:
             yield buf
         buf.append(x)
+    yield buf
 
 def skip(n, it):
     for i, x in enumerate(it):
