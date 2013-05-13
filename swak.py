@@ -94,7 +94,7 @@ def sliding(n, it):
 def growing(n, it):
     buf = []
     for i, x in enumerate(it):
-        if i == n:
+        if i % n == 0:
             yield buf
         buf.append(x)
 
