@@ -60,7 +60,7 @@ def system(arg):
     return sh(arg, shell=False)
 
 def system_slurp(arg):
-    return shtick(arg, shell=False)
+    return sh_slurp(arg, shell=False)
 
 ########################################################################
 # Iteration
