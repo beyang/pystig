@@ -17,6 +17,7 @@ import math
 import operator
 import pickle
 import pprint
+import random
 import subprocess
 import sys
 
@@ -109,6 +110,11 @@ def ticked(it, step, logger=print_):
     for i, x in enumerate(it):
         if i % step == 0:
             logger(i)
+            yield x
+
+def subsample(it, rate):
+    for x in it:
+        if random.random() <= rate:
             yield x
 
 ########################################################################
@@ -298,9 +304,8 @@ class StrDB(collections.Mapping):
 
 def curry(f, *args, **kwargs):
     def g(*args_, **kwargs_):
-        args.extend(args_)
         kwargs.update(kwargs_)
-        return f(*args, **kwargs)
+        return f(*(args + args_), **kwargs)
     g.__name__ = f.__name__
     g.__doc__ = f.__doc__
     return g
@@ -670,8 +675,10 @@ class ScriptOptions:
                 out('  -' + short + ', --' + opt)
                 out('    ' + desc)
 
+########################################################################
+# Main
 
-if __name__ == '__main__':
+def _run_tests():
     # Unit tests!
 
     print_('Testing print_ function.')
@@ -679,9 +686,9 @@ if __name__ == '__main__':
     assert list(chunked(3, [1,2,3,4,5,6,7,8])) == [[1,2,3], [4,5,6], [7,8]]
 
     ticks = iter(xrange(0, 42, 5))
-    def f(i):
+    def f(ticks, i):
         assert i == next(ticks)
-    ticked(xrange(42), 5, f)
+    ticked(xrange(42), 5, curry(f, ticks))
     del f, ticks
 
     assert concat([[1,2,3], [4], [5,6]]) == [1,2,3,4,5,6]
@@ -746,10 +753,10 @@ if __name__ == '__main__':
         pass
 
     x = {'a': 0}
-    def f(y):
+    def f(x, y):
         x['a'] += 1
         return x['a']
-    f = memoized(f)
+    f = memoized(curry(f, x))
     assert f(1) == 1
     assert f(1) == 1
     assert f(1) == 1
@@ -761,3 +768,9 @@ if __name__ == '__main__':
 
     print('Passed all tests!')
 
+if __name__ == '__main__':
+    if len(sys.argv) > 1:
+        cmd, args = sys.argv[1], sys.argv[2:]
+
+        if cmd == 'test':
+            _run_tests()
