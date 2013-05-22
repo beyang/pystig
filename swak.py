@@ -208,13 +208,25 @@ def cumsum(xs):
 def diff(xs):
     return [xs[i] - xs[i-1] for i in xrange(1, len(xs))]
 
-# Useful for pairs (e.g. sorted(pairs, key=snd))
+# Useful for abbreviated tuple manipulation (e.g. sorted(pairs, key=snd))
 
-def fst(x):
+def first(x):
     return x[0]
 
-def snd(x):
+def second(x):
     return x[1]
+
+def third(x):
+    return x[2]
+
+def fourth(x):
+    return x[3]
+
+def fifth(x):
+    return x[4]
+
+fst = first
+snd = second
 
 def enumeration(xs):
     '''
