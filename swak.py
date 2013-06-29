@@ -622,6 +622,21 @@ def parse_rows(rows, fields, delim=None):
 ########################################################################
 # Scripting
 
+def run_job_queue(queue, conc,
+                  run=lambda job: job.run(),
+                  done=lambda job: job.poll() is not None,
+                  tick=0.1):
+    working = []
+    while len(queue) > 0 or len(working) > 0:
+        for job in working:
+            if done(job):
+                working.remove(job)
+        while len(queue) > 0 and len(working) < conc:
+            cur, queue = queue[0], queue[1:]
+            run(job)
+            working.append(cur)
+        time.sleep(tick)
+
 class ScriptOptions:
     '''
     Users might be interested in `argparse` from the Python standard
