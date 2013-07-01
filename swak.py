@@ -49,13 +49,19 @@ except NameError:
 ########################################################################
 # Unix/OS
 
-def sh(arg, shell=True):
+def sh(arg, shell=True, bash=False):
     '''Issue a shell command as subprocess.'''
-    return subprocess.check_call(arg, shell=shell)
+    kwargs = {}
+    if bash:
+        kwargs['executable'] = '/bin/bash'
+    return subprocess.check_call(arg, shell=shell, **kwargs)
 
-def sh_slurp(arg, shell=True):
+def sh_slurp(arg, shell=True, bash=False):
     '''Issue a shell command as subprocess and return its output'''
-    return subprocess.check_output(arg, shell=shell, universal_newlines=True)
+    kwargs = {}
+    if bash:
+        kwargs['executable'] = '/bin/bash'
+    return subprocess.check_output(arg, shell=shell, universal_newlines=True, **kwargs)
 
 def system(arg):
     return sh(arg, shell=False)
