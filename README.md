@@ -1,4 +1,4 @@
-pyswak
+pystig
 ======
 
-A Swiss army knife for Python.
+Egocentric Python utilities.
