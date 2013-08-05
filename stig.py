@@ -159,33 +159,6 @@ def getattr_trail(trail, d):
         d = d[t]
     return d
 
-def build_jsonlike_query(query):
-    '''
-    Returns a function that takes a dict as obtained by `json.loads()`
-    and executes the jsonlike query on it.
-
-    Example:
-    The query (string)
-
-       'foo.bar.#2.baz'
-
-    return `47` when applied to
-
-       {
-         'foo': {
-           'bar': [{}, { 'zap': 62 }, { 'baz': 47 }, { 'bzzp': 5 }],
-           'baf': [5]
-         }
-       }
-
-    '''
-    trail = query.split('.')
-    trail = [
-        int(x[1:]) if (len(x) >= 2 and x[0] == '#') else unicode(x)
-        for x in trail
-    ]
-    return curry(getattr_trail, trail)
-
 ########################################################################
 # Sequences / iteration
 
@@ -707,6 +680,46 @@ class ScriptOptions:
             else:
                 out('  -' + short + ', --' + opt)
                 out('    ' + desc)
+
+########################################################################
+# Web / text / encoding / data formats
+
+# Python 2/3 interop
+try:
+    import HTMLParser
+except ImportError:
+    import html.parser
+    HTMLParser = html.parser
+
+def html_unescape(s):
+    return HTMLParser.HTMLParser().unescape(s)
+
+def build_jsonlike_query(query):
+    '''
+    Returns a function that takes a dict as obtained by `json.loads()`
+    and executes the jsonlike query on it.
+
+    Example:
+    The query (string)
+
+       'foo.bar.#2.baz'
+
+    return `47` when applied to
+
+       {
+         'foo': {
+           'bar': [{}, { 'zap': 62 }, { 'baz': 47 }, { 'bzzp': 5 }],
+           'baf': [5]
+         }
+       }
+
+    '''
+    trail = query.split('.')
+    trail = [
+        int(x[1:]) if (len(x) >= 2 and x[0] == '#') else unicode(x)
+        for x in trail
+    ]
+    return curry(getattr_trail, trail)
 
 ########################################################################
 # Main
