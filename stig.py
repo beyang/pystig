@@ -370,7 +370,7 @@ def log10(x):
 
 def mean(ls):
     assert len(ls) > 0
-    return float(sum(ls)) / len(ls)
+    return sum(ls) / len(ls)
 
 def median(ls):
     assert len(ls) > 0
