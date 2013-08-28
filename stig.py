@@ -368,6 +368,15 @@ def log2(x):
 def log10(x):
     return math.log(x, 10)
 
+def log_sum_exp(xs):
+    if len(xs) == 0:
+        return -inf
+    def lse(x, y):
+        lo = min(x, y)
+        hi = max(x, y)
+        return math.log(1.0 + math.exp(hi - lo)) + lo;
+    return lfold(lse, xs)
+
 def mean(ls):
     assert len(ls) > 0
     return sum(ls) / len(ls)
