@@ -374,7 +374,7 @@ def log_sum_exp(xs):
     def lse(x, y):
         lo = min(x, y)
         hi = max(x, y)
-        return math.log(1.0 + math.exp(hi - lo)) + lo;
+        return math.log(1.0 + math.exp(lo - hi)) + hi;
     return lfold(lse, xs)
 
 def mean(ls):
