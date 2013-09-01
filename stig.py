@@ -427,12 +427,12 @@ def sample_stddev(ls, meanval=None):
 
 def argmins(seq, key=ident):
     '''Key must output a number given a sequence element.'''
-    xs, min = [], key(require_first(seq))
+    xs, min_ = [], key(require_first(seq))
     for x, y in enumerate(seq):
         y = key(y)
-        if y < min:
-            xs, min = [x], y
-        elif y == min:
+        if y < min_:
+            xs, min_ = [x], y
+        elif y == min_:
             xs.append(x)
     return xs
 
