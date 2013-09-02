@@ -10,6 +10,8 @@ A few are derivatives of utilities from
 http://aima.cs.berkeley.edu/python/utils.html.
 '''
 
+from __future__ import print_function
+
 import collections
 import datetime
 import getopt
@@ -24,12 +26,12 @@ import sys
 ########################################################################
 # Python 2/3 compatibility/interop
 
-def print_(x):
+def print_(*args):
     '''
     `print` is not a function in Python 2 but `print_` will be a
     function in any Python.
     '''
-    print(x)
+    print(*args)
 
 def printerr(x):
     sys.stderr.write(x)
@@ -117,6 +119,16 @@ def ticked(it, step, logger=print_):
         if i % step == 0:
             logger(i)
             yield x
+
+def time_ticked(it, step, logger=print_):
+    assert step > 0
+    last = datetime.datetime.now()
+    for i, x in enumerate(it):
+        if i % step == 0:
+            now = datetime.datetime.now()
+            logger(i, str(now - last))
+            last = now
+        yield x
 
 def subsample(it, rate):
     for x in it:
