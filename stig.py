@@ -380,13 +380,13 @@ def log2(x):
 def log10(x):
     return math.log(x, 10)
 
-def log_sum_exp(xs):
+def log_sum_exp(xs, log=math.log, exp=math.exp):
     if len(xs) == 0:
         return -inf
     def lse(x, y):
         lo = min(x, y)
         hi = max(x, y)
-        return math.log(1.0 + math.exp(lo - hi)) + hi;
+        return log(1.0 + exp(lo - hi)) + hi;
     return lfold(lse, xs)
 
 def mean(ls):
