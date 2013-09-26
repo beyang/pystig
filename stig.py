@@ -389,6 +389,9 @@ def log_sum_exp(xs, log=math.log, exp=math.exp):
         return log(1.0 + exp(lo - hi)) + hi;
     return lfold(lse, xs)
 
+def sigmoid(x, exp=math.exp):
+    return 1.0 / (1.0 + exp(-x))
+
 def mean(ls):
     assert len(ls) > 0
     return sum(ls) / len(ls)
