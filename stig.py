@@ -606,6 +606,9 @@ class Struct:
     def __repr__(self):
         return 'Struct(%s)' % ', '.join('%s=%s' % (k, repr(v)) for k, v in self.__dict__.items())
 
+    def items(self):
+        return self.__dict__.items()
+
 def dict_collect(seq):
     '''
     From a sequence of (k, v) pairs, produces a dict mapping every
