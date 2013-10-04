@@ -93,12 +93,28 @@ def take(n, it):
         buf.append(x)
     return buf
 
+def xtake(n, it):
+    for i, x in enumerate(it):
+        if i == n:
+            return
+        yield x
+
 def sliding(n, it):
     buf = take(n, it)
     yield tuple(buf)
     for x in it:
         buf = buf[1:] + [x]
         yield tuple(buf)
+
+def repeat(it):
+    '''
+    Like itertools.chain but friendly to one-pass iterators at the cost
+    of memory.
+    '''
+    buf = list(it)
+    while True:
+        for x in buf:
+            yield x
 
 def growing(n, it):
     buf = []
