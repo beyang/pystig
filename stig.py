@@ -151,6 +151,12 @@ def subsample(it, rate):
         if random.random() <= rate:
             yield x
 
+def round_robin(n, it):
+    xs = [[] for _ in xrange(n)]
+    for i, x in enumerate(it):
+        xs[i % n].append(x)
+    return xs
+
 ########################################################################
 # Collections
 
@@ -624,6 +630,9 @@ class Struct:
 
     def items(self):
         return self.__dict__.items()
+
+def str_kv_pairs(pairs, outer_sep=', ', inner_sep='='):
+    return outer_sep.join([inner_sep.join([str(x) for x in p]) for p in pairs])
 
 def dict_collect(seq):
     '''
