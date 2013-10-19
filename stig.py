@@ -558,7 +558,7 @@ def hamming_weight(seq):
 def normalize(seq, total=1.0):
     '''Scale numbers in `seq` so that they sum to `total`.'''
     seq = list(seq)
-    s = total / sum(seq)
+    s = total / float(sum(seq))
     return scale(s, seq)
 
 ########################################################################
