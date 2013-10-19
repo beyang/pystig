@@ -575,7 +575,7 @@ def bsearch(x, xs):
             return mid
     return lo
 
-class Tree:
+class Tree(object):
     @staticmethod
     def from_list(ls):
         return Tree(ls[0], [Tree.from_list(x) for x in ls[1:]])
@@ -615,7 +615,7 @@ class Tree:
     def map(self, f):
         return Tree(f(self.label), [kid.map(f) for kid in self.children])
 
-class Struct:
+class Struct(object):
     def __init__(self, **entries):
         self.__dict__.update(entries)
 
@@ -668,7 +668,7 @@ def run_job_queue(queue, conc,
             working.append(cur)
         time.sleep(tick)
 
-class ScriptOptions:
+class ScriptOptions(object):
     '''
     Users might be interested in `argparse` from the Python standard
     library.  This remains here because `argparse` only lives in
