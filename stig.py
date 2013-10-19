@@ -147,9 +147,9 @@ def time_ticked(it, step, logger=print_):
             last = now
         yield x
 
-def subsample(it, rate):
+def subsample(it, rate, rng=random):
     for x in it:
-        if random.random() <= rate:
+        if rng.random() <= rate:
             yield x
 
 def round_robin(n, it):
@@ -419,7 +419,7 @@ def mean(ls):
     assert len(ls) > 0
     return sum(ls) / len(ls)
 
-def median(ls):
+def median(ls, rng=random):
     assert len(ls) > 0
     n = len(ls)
     ls = sorted(ls)
@@ -430,7 +430,7 @@ def median(ls):
         try:
             return mean(mids)
         except TypeError:
-            return random.choice(mids)
+            return rng.choice(mids)
 
 def mode(ls):
     assert len(ls) > 0
@@ -503,18 +503,18 @@ def histogram(seq, key=ident, by_count=False):
     else:
         return sorted(h.items())
 
-def coinflip(p):
+def coinflip(p, rng=random):
     '''True with probability p.'''
-    return random.uniform(0, 1) < p
+    return rng.uniform(0, 1) < p
 
 def cdf_to_pdf(cdf):
     assert len(cdf) > 0
     return [cdf[0]] + diff(cdf)
 
-def diceroll(cdf):
+def diceroll(cdf, rng=random):
     assert len(cdf) > 0
     assert 0.0 <= sum(cdf_to_pdf(cdf)) <= 1.0
-    x = random.uniform(0, 1)
+    x = rng.uniform(0, 1)
     return bsearch(x, cdf)
 
 def prod(seq, start=None):
