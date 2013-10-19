@@ -513,7 +513,7 @@ def cdf_to_pdf(cdf):
 
 def diceroll(cdf, rng=random):
     assert len(cdf) > 0
-    assert 0.0 <= sum(cdf_to_pdf(cdf)) <= 1.0
+    # assert 0.0 <= sum(cdf_to_pdf(cdf)) <= 1.0
     x = rng.uniform(0, 1)
     return bsearch(x, cdf)
 
