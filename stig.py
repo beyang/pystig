@@ -4,7 +4,7 @@
 A set of reinvented wheels, "useful utilities", and so forth.
 
 Ought to work with both Python 3 and recent Python 2s (tested with
-2.6.1).
+2.7.5).
 
 A few are derivatives of utilities from
 http://aima.cs.berkeley.edu/python/utils.html.
@@ -15,6 +15,7 @@ from __future__ import print_function
 import collections
 import datetime
 import getopt
+import json
 import math
 import operator
 import pickle
@@ -574,6 +575,9 @@ def bsearch(x, xs):
         else:
             return mid
     return lo
+
+def abs_impl():
+    raise NotImplementedError('Must override')
 
 class Tree(object):
     @staticmethod
