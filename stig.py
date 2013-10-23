@@ -10,6 +10,8 @@ A few are derivatives of utilities from
 http://aima.cs.berkeley.edu/python/utils.html.
 '''
 
+from __future__ import print_function
+
 import collections
 import datetime
 import getopt
@@ -684,9 +686,9 @@ class DummyAttrs(object):
     def __getattr__(self, x):
         def dummy(*args, **kwargs):
             if self.verbose > 1:
-                print >>sys.stderr, 'Dummy call: {}(*{}, **{})'.format(x, args, kwargs)
+                print('Dummy call: {}(*{}, **{})'.format(x, args, kwargs), file=sys.stderr)
             elif self.verbose > 0:
-                print >>sys.stderr, 'Dummy call:', x
+                print('Dummy call:', x, file=sys.stderr)
         dummy.__name__ = 'dummy(' + x + ')'
         return dummy
 
