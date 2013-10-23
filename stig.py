@@ -10,8 +10,6 @@ A few are derivatives of utilities from
 http://aima.cs.berkeley.edu/python/utils.html.
 '''
 
-from __future__ import print_function
-
 import collections
 import datetime
 import getopt
