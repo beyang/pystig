@@ -672,6 +672,26 @@ def run_job_queue(queue, conc,
             working.append(cur)
         time.sleep(tick)
 
+class DummyAttrs(object):
+    '''
+    Useful, for instance, for silent-failing on import and logging
+    usage.  Example:
+
+    >>> try: import foo           # Suppose we don't have this
+    >>> except ImportError: foo = DummyAttrs(verbose=1)
+    >>> foo.bar()                 # prints 'Dummy call: bar' to stderr
+    '''
+    def __init__(self, verbose=0):
+        self.verbose = verbose
+    def __getattr__(self, x):
+        def dummy(*args, **kwargs):
+            if self.verbose > 1:
+                print >>sys.stderr, 'Dummy call: {}(*{}, **{})'.format(x, args, kwargs)
+            elif self.verbose > 0:
+                print >>sys.stderr, 'Dummy call:', x
+        dummy.__name__ = 'dummy(' + x + ')'
+        return dummy
+
 class ScriptOptions(object):
     '''
     Users might be interested in `argparse` from the Python standard
