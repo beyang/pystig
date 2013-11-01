@@ -564,6 +564,25 @@ def normalize(seq, total=1.0):
 FLOAT_RE = r'(([1-9][0-9]*\.?[0-9]*)|(\.[0-9]+))([Ee][+-]?[0-9]+)?'
 
 ########################################################################
+# Files / streams / sockets
+
+class Tee(object):
+    '''
+    Adapted from
+    https://mail.python.org/pipermail/python-list/2007-May/438106.html
+    '''
+    def __init__(self, out, name, mode):
+        self.tee = open(name, mode)
+        self.out = out
+
+    def __del__(self):
+        self.tee.close()
+
+    def write(self, data):
+        self.tee.write(data)
+        self.out.write(data)
+
+########################################################################
 # Misc
 
 def bsearch(x, xs):
