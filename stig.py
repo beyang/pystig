@@ -386,7 +386,7 @@ def memoized(f, key=hashable_args):
             g.memo_cache[k] = f(*args, **kwargs)
         return g.memo_cache[k]
     g.memo_cache = {}
-    g.__name__ = 'memoized( ' + f.__name__ + ')'
+    g.__name__ = 'memoized(' + f.__name__ + ')'
     return g
 
 ########################################################################
