@@ -650,6 +650,13 @@ class Struct(object):
         else:
             return cmp(self.__dict__, other)
 
+    def __hash__(self):
+        h = 17
+        for k, v in self.items():
+            h += 31 * hash(k)
+            h += 31 * hash(v)
+        return h
+
     def __repr__(self):
         return 'Struct(%s)' % ', '.join('%s=%s' % (k, repr(v)) for k, v in self.__dict__.items())
 
