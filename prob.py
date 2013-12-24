@@ -6,7 +6,7 @@ Probability distributions with sampling routines.
 
 import numpy as np
 import random
-import stig
+from pystig import stig
 
 
 class Distribution(object):
